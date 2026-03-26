@@ -28,6 +28,7 @@
  */
 function filterNegativeNumbers(numbers) {
   // Your implementation here
+  return numbers.filter(num=> num >= 0 )
 }
 
 /**
@@ -47,6 +48,10 @@ function filterNegativeNumbers(numbers) {
  */
 function doubleDivisibleByThree(numbers) {
   // Your implementation here
+  const bythree = numbers.filter(num=> num % 3 === 0);
+  const double = bythree.map(num=> num * 2);
+  return double;
+
 }
 
 /**
@@ -76,6 +81,19 @@ function doubleDivisibleByThree(numbers) {
  */
 function selectHighPerformingStudents(students) {
   // Your implementation here
+  //filter gpa and hobby
+  const gpaandhobby= students.filter(student=> student.GPA>=5 && student.hobbies.includes("coding"));
+  // keep only name and email
+  const nameandemail=gpaandhobby.map(student=>({
+    name: student.name,
+    email:student.email
+  }));
+  // sort alphabetically by thier name
+  const sorted=nameandemail.sort((a,b)=>
+    a.name.localeCompare(b.name)
+  );
+
+  return sorted;
 }
 
 /**
@@ -104,7 +122,23 @@ function selectHighPerformingStudents(students) {
  */
 function aggregateStudentData(students) {
   // Your implementation here
-}
+  // count all students 
+  let studentNum = students.length;
+  // average 
+  let totalGpa = students.reduce((sum, student) => sum + student.GPA, 0);
+  let studentAvgGpa = students.parseFloat(totalGpa / studentNum).toFixed(2);
+  //coding students 
+  let codingStudents = student.filter(student=> student.hobbies.includes("coding"));
+  let codingStudentNum = condingStudents.length;
+  let totalCodingGPA = codingStudents.reduce((sum, student)=> sum + styudent.GPA, 0);
+  let codingstudentsGPA = parseFloat((totalCodingGPD / codingStuentNum).toFixed(2));
+  return {
+    studentNum,
+    studentAvgGpa,
+    codingStudentNum,
+    codingStudentGPA,
+  };
+};
 
 /**
  * Exercise 5: Swapping Between Sentence and CamelCase Forms
@@ -127,6 +161,24 @@ function aggregateStudentData(students) {
  */
 function swapForm(input) {
   // Your implementation here
+  //check if string has spaces 
+  if (input.includes(" ")){
+    //convert sentence to camelcase
+    const words = input.split(" ");
+    const camelwords = words.map((word, index)=>{
+      if (index===0) {
+        return word;
+      }
+      // capitalise the first letter and add the rest of the word
+      return word.chartAt(0).toUpperCase() + word.slice(1);
+    });
+    return camelwords.join("");
+
+  }else {
+    //convert camelcae back to sentence 
+    return input.replace(/([A-Z])/g, " $1 ").toLowerCase();
+  }
+
 }
 
 // Export the function for testing with Jest
